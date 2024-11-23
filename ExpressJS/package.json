@@ -1,0 +1,11 @@
+{
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "express": "^4.19.2",
+    "mongoose": "^8.5.2",
+    "nodemon": "^3.1.4"
+  },
+  "scripts": {
+    "server": "nodemon LAB-19\\Lab_19_2.js"
+  }
+}
