@@ -5,7 +5,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const Product = require('./Product');//local module relative path 
-const connectString = "mongodb+srv://i_am_vishal_1014:vishal_1014@cluster0.r4bt2.mongodb.net/Demo";
+const connectString = "YourConnectString";
 const port = 3000;
 
 mongoose.connect(connectString).then(()=>{
