@@ -1,29 +1,39 @@
-# 🌐 Web Technology Projects
+# 🌐 Web Technology
 
-Welcome to the **Web Technology** repository! This repository contains a collection of practical projects, assignments, and examples developed as part of learning and experimenting with modern web development technologies.
+Welcome to the **Web Technology** repository! This repository is a collection of frontend and backend projects built using modern web technologies such as **JavaScript**, **Node.js**, **Express.js**, and **React.js**. It showcases real-world applications, course assignments, and experiments created to build and strengthen full-stack development skills.
 
 ## 🧠 About
 
-This repository includes frontend and backend projects that demonstrate key concepts in web development. From basic HTML/CSS pages to JavaScript-based interactivity and simple full-stack applications, it showcases a wide range of skills and learning progress.
+This repo represents a journey through core web development concepts—from static websites to dynamic web apps using REST APIs and full-stack integration. Ideal for students, learners, and anyone wanting to understand the fundamentals of full-stack web development.
 
-## 🚀 Technologies Used
+## 🚀 Tech Stack
 
-- **HTML5** – Markup structure
-- **CSS3** – Styling and layout
-- **JavaScript (Vanilla)** – Interactivity and logic
-- **Bootstrap** – Responsive design (if applicable)
-- **VS Code** – Primary IDE used
+- 🌐 **Frontend**:
+  - HTML5
+  - CSS3
+  - JavaScript (ES6+)
+  - React.js (Functional Components, Hooks, JSX)
+
+- 🛠️ **Backend**:
+  - Node.js
+  - Express.js
+
+- 🧰 **Tools & Libraries**:
+  - VS Code
+  - npm (Node Package Manager)
 
 ## 🧩 Features
 
-- Semantic and accessible HTML
-- Responsive and mobile-friendly layouts
-- Dynamic elements using JavaScript
-- Hands-on mini projects to practice
+- Clean, semantic HTML & modular CSS
+- JavaScript-powered interactivity
+- REST API development using Express.js
+- React components with state & props
+- Form validation (client-side)
+- Modular file structure
 
 ## 📚 Learning Outcomes
 
-- Understanding of core web technologies
-- Real-world application of frontend logic
-- Modular project structure and code reuse
-- Experience with form validation and UI interaction
+- Solid understanding of full-stack fundamentals
+- Hands-on experience with JavaScript and its ecosystem
+- Frontend & backend communication using REST
+- Improved problem-solving through projects
