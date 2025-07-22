@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Warrior Pong - Mr. Baraiya</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Goldman:wght@700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <canvas id="pong" width="960" height="600"></canvas>
+    <div id="overlay">
+        <!-- Difficulty Selection -->
+        <div class="screen" id="difficulty-screen">
+            <h1>Select Opponent</h1>
+            <button class="diff-btn" data-diff="easy">Easy</button>
+            <button class="diff-btn" data-diff="medium">Medium</button>
+            <button class="diff-btn" data-diff="hard">Hard</button>
+            <p class="note">Choose the difficulty to start your battle!</p>
+            <div class="nav-btns">
+                <button class="home-btn" style="display:none">Home</button>
+            </div>
+        </div>
+        <!-- Home/Main Menu -->
+        <div class="screen" id="home-screen" style="display:none">
+            <h1>⚔️ Warrior Pong ⚔️</h1>
+            <p class="subtitle">Mr. Baraiya Edition</p>
+            <p class="desc">Defeat the AI and set your high score!</p>
+            <p class="high-score-text">High Score: <span id="high-score-main">0</span></p>
+            <button id="start-btn">Start</button>
+        </div>
+        <!-- Tutorial/Instructions -->
+        <div class="screen" id="screen1" style="display:none">
+            <h2>How to Play</h2>
+            <ul>
+                <li>Move your mouse up and down anywhere on the screen to control your paddle.</li>
+                <li>The right paddle is your AI opponent. Press <b>I</b> for “Legend” mode.</li>
+                <li>Press <b>P</b> or use the Pause button to pause/resume.</li>
+                <li>Reset button restarts the match.</li>
+            </ul>
+            <div class="nav-btns">
+                <button class="back-btn">Back</button>
+                <button class="home-btn">Home</button>
+                <button class="next-btn">Next</button>
+            </div>
+        </div>
+        <div class="screen" id="screen2" style="display:none">
+            <h2>Scoring & Winning</h2>
+            <ul>
+                <li>Score a point when the AI misses the ball.</li>
+                <li>First to 50 points is the winner!</li>
+                <li>Try to beat your high score!</li>
+            </ul>
+            <div class="nav-btns">
+                <button class="back-btn">Back</button>
+                <button class="home-btn">Home</button>
+                <button class="next-btn">Next</button>
+            </div>
+        </div>
+        <div class="screen" id="screen3" style="display:none">
+            <h2>Special Features</h2>
+            <ul>
+                <li>Paddles: "Strength" vs "Warrior"</li>
+                <li>Energy trails, sparks, and slash effects on every hit!</li>
+                <li>Legend mode: Press <b>I</b> for the toughest AI.</li>
+            </ul>
+            <div class="nav-btns">
+                <button class="back-btn">Back</button>
+                <button class="home-btn">Home</button>
+                <button class="start-game-btn">Start Game</button>
+            </div>
+        </div>
+        <!-- Pause Screen -->
+        <div class="screen" id="pause-screen" style="display:none">
+            <h1>⏸️ Paused</h1>
+            <p class="desc">Take a breather, warrior.</p>
+            <button id="resume-btn">Resume</button>
+            <button id="reset-btn">Reset</button>
+            <div class="nav-btns">
+                <button class="home-btn">Home</button>
+            </div>
+            <p class="note">Press <b>P</b> to resume</p>
+        </div>
+        <!-- Victory Screen -->
+        <div class="screen" id="victory-screen" style="display:none">
+            <h1>🏆 Victory! 🏆</h1>
+            <p class="desc">You scored 50 points!<br>Well done, Mr. Baraiya!</p>
+            <p class="high-score-text">High Score: <span id="high-score-victory">0</span></p>
+            <button id="restart-btn">Restart</button>
+            <div class="nav-btns">
+                <button class="home-btn">Home</button>
+            </div>
+        </div>
+    </div>
+    <div id="hud">
+        <button id="pause-btn" title="Pause (P)">⏸️</button>
+        <button id="reset-btn-hud" title="Reset">🔄</button>
+    </div>
+    <div id="score-animate"></div>
+    <script src="game.js"></script>
+</body>
+</html>

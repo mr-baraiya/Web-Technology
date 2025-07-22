@@ -1,0 +1,174 @@
+body {
+    background: linear-gradient(135deg, #191720 0%, #410707 90%);
+    min-height: 100vh;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#pong {
+    background: radial-gradient(circle at 50% 55%, #222 55%, #611d1d 100%);
+    border: 4px solid #fff2;
+    border-radius: 30px;
+    box-shadow: 0 0 75px #ffb70066, 0 0 220px #1e2239;
+    display: block;
+    z-index: 1;
+    cursor: default;
+}
+#overlay {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(20,14,9, 0.92);
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.screen {
+    background: linear-gradient(120deg, #180b04 60%, #511a1a 100%);
+    border-radius: 24px;
+    box-shadow: 0 0 44px #ffb70033;
+    padding: 50px 60px 40px 60px;
+    text-align: center;
+    font-family: 'Bebas Neue', 'Goldman', 'Arial Black', Arial, sans-serif;
+    color: #ffb700;
+    min-width: 340px;
+    max-width: 92vw;
+}
+.screen h1, .screen h2 {
+    font-family: 'Goldman', 'Bebas Neue', 'Arial Black', Arial, sans-serif;
+    letter-spacing: 2px;
+    color: #ffb700;
+    margin-bottom: 0.4em;
+    font-size: 2.3em;
+}
+.screen .subtitle {
+    color: #fff;
+    font-size: 1.1em;
+    margin-bottom: 0.5em;
+    font-family: 'Bebas Neue', 'Arial Black', Arial, sans-serif;
+    letter-spacing: 0.09em;
+}
+.screen .desc {
+    color: #fff6;
+    font-size: 1.15em;
+    margin-bottom: 1em;
+}
+.screen ul {
+    text-align: left;
+    font-family: 'Goldman', 'Arial Black', monospace;
+    color: #ffb700;
+    font-size: 1em;
+    margin: 0 0 1.2em 0;
+    padding-left: 2em;
+}
+.screen .note {
+    font-size: 1em;
+    color: #fff;
+    margin-top: 1.5em;
+}
+.high-score-text {
+    color: #fff;
+    font-size: 1.15em;
+    margin-bottom: 1.3em;
+}
+.nav-btns {
+    margin-top: 1.2em;
+    display: flex;
+    justify-content: center;
+    gap: 1.2em;
+}
+.nav-btns button {
+    font-size: 1em;
+    font-family: 'Bebas Neue', 'Goldman', Arial, sans-serif;
+    border-radius: 7px;
+    background: #191720e0;
+    color: #ffb700;
+    border: 2px solid #ffb700;
+    padding: 0.35em 1.5em;
+    cursor: pointer;
+    margin: 0 0.2em;
+    transition: background 0.14s, color 0.14s, transform 0.13s;
+}
+.nav-btns button:hover {
+    background: #ffb700;
+    color: #191720;
+    transform: scale(1.09);
+}
+#score-animate {
+    position: fixed;
+    left: 50%;
+    top: 18%;
+    transform: translateX(-50%);
+    font-size: 92px;
+    font-family: 'Goldman', 'Bebas Neue', 'Arial Black', Arial, sans-serif;
+    color: #ffb700;
+    text-shadow: 0 0 36px #fff, 0 0 120px #ffb70099;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s, transform 0.25s;
+    z-index: 100;
+}
+.diff-btn, #start-btn, #restart-btn, #resume-btn, #reset-btn, .next-btn, .back-btn, .home-btn, .start-game-btn {
+    font-family: 'Goldman', 'Bebas Neue', Arial, sans-serif;
+    font-size: 1.15em;
+    padding: 0.6em 2em;
+    border-radius: 10px;
+    border: none;
+    background: #ffb700;
+    color: #191720;
+    box-shadow: 0 0 14px #e8411880;
+    cursor: pointer;
+    margin: 0.8em 0.5em 0.3em 0.5em;
+    transition: background 0.18s, color 0.18s, transform 0.13s;
+}
+.diff-btn:hover, #start-btn:hover, #restart-btn:hover, #reset-btn:hover, .next-btn:hover, .back-btn:hover, .home-btn:hover, .start-game-btn:hover, #resume-btn:hover {
+    background: #e84118;
+    color: #fff;
+    transform: scale(1.09);
+}
+#resume-btn { background: #ffb700; color: #191720; }
+#resume-btn:hover { background: #e84118; color: #fff; }
+
+#hud {
+    position: absolute;
+    top: 18px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 5;
+    display: flex;
+    gap: 18px;
+}
+#pause-btn, #reset-btn-hud {
+    font-size: 2em;
+    background: #191720e0;
+    color: #ffb700;
+    border: 2px solid #ffb700;
+    border-radius: 12px;
+    padding: 2px 18px;
+    margin: 0;
+    cursor: pointer;
+    transition: background 0.13s, color 0.13s;
+    font-family: 'Bebas Neue', 'Goldman', Arial, sans-serif;
+}
+#pause-btn:hover, #reset-btn-hud:hover {
+    background: #ffb700;
+    color: #191720;
+}
+@media (max-width: 600px) {
+    .screen {
+        padding: 10vw 2vw 6vw 2vw;
+        min-width: unset;
+        font-size: 2vw;
+    }
+    #pong {
+        width: 98vw !important;
+        height: 64vw !important;
+    }
+    #hud {
+        top: 3vw;
+        gap: 7vw;
+    }
+}
