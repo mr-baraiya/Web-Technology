@@ -1,0 +1,107 @@
+/* Custom styles for Three.js Wireframe Cube and Cuboid Application */
+
+/* Ensure the canvas takes full space */
+#three-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+#three-container canvas {
+    display: block;
+    width: 100% !important;
+    height: 100% !important;
+}
+
+/* Smooth transitions for UI elements */
+.absolute {
+    transition: all 0.3s ease;
+}
+
+/* Custom scrollbar for webkit browsers */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #0a0a0a;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #00ff00;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #ff6b6b;
+}
+
+/* Ensure body and html take full height */
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Add a subtle glow effect to the UI */
+.bg-black.bg-opacity-50 {
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Hover effects for interactive elements */
+.absolute:hover {
+    transform: translateY(-2px);
+}
+
+/* Responsive text sizing */
+@media (max-width: 768px) {
+    .text-3xl {
+        font-size: 1.5rem;
+    }
+    
+    .text-lg {
+        font-size: 1rem;
+    }
+    
+    /* Stack UI elements vertically on mobile */
+    .absolute.top-4.right-4 {
+        top: auto;
+        bottom: 4rem;
+        right: 1rem;
+        left: 1rem;
+    }
+    
+    .absolute.bottom-4.left-4 {
+        bottom: 1rem;
+        left: 1rem;
+        right: 1rem;
+    }
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 480px) {
+    .text-3xl {
+        font-size: 1.25rem;
+    }
+    
+    .text-lg {
+        font-size: 0.875rem;
+    }
+    
+    .text-sm {
+        font-size: 0.75rem;
+    }
+    
+    /* Reduce padding on mobile */
+    .p-4 {
+        padding: 0.75rem;
+    }
+}
+
+/* Ensure wireframe lines are crisp */
+#three-container canvas {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+}
