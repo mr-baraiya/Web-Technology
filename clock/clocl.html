@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>jQuery Analog + Digital Clock</title>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root{ --bg:#0f1724; --face:#0b1220; --tick:#cfd8e3; --hand:#fff; --accent:#5ad2ff; --sub:#9fb0d1; --text:#e6f1ff }
+    html,body{height:100%;margin:0;background:linear-gradient(180deg,#071028 0%,var(--bg)100%);font-family:Inter,system-ui,Segoe UI,Roboto,Arial}
+    .clock-wrap{width:320px;height:320px;display:grid;place-items:center}
+    .clock{width:100%;height:100%;border-radius:50%;position:relative;background:radial-gradient(circle at 30% 30%, rgba(90,210,255,0.03), transparent 20%), linear-gradient(180deg,#0f243b,#081423);box-shadow:inset 0 -10px 30px rgba(0,0,0,0.6), 0 12px 30px rgba(0,0,0,0.6);border:6px solid rgba(255,255,255,0.04)}
+    .center-dot{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:12px;height:12px;border-radius:50%;background:var(--accent);box-shadow:0 0 14px rgba(90,210,255,0.6)}
+    .hand{position:absolute;left:50%;top:50%;transform-origin:50% 85%;transform:rotate(90deg);}
+    .hour{width:8px;height:80px;border-radius:6px;background:linear-gradient(180deg,var(--hand),rgba(255,255,255,0.85));margin-top:-80px;z-index:6}
+    .minute{width:6px;height:110px;border-radius:6px;background:linear-gradient(180deg,var(--hand),rgba(255,255,255,0.9));margin-top:-110px;z-index:5}
+    .second{width:2px;height:130px;background:var(--accent);margin-top:-130px;z-index:4;box-shadow:0 0 8px rgba(90,210,255,0.5)}
+    .ticks{position:absolute;inset:0;border-radius:50%;}
+    .tick{position:absolute;left:50%;top:6px;width:4px;height:18px;background:var(--tick);transform-origin:50% 140px;border-radius:2px;opacity:0.95}
+    .num{position:absolute;left:50%;top:18px;transform-origin:50% 160px;color:var(--tick);font-weight:600}
+    @media (max-width:420px){.clock-wrap{width:260px;height:260px}}
+    .time {font-family: monospace;font-size: 64px;line-height:1;letter-spacing:0.04em;user-select:none;color:var(--text);text-shadow:0 0 18px rgba(90,210,255,0.25)}
+    .ampm{font-size:18px;color:var(--sub);margin-left:4px;transform:translateY(-4px)}
+    .date{font-size:16px;color:var(--sub)}
+  </style>
+</head>
+<body>
+  <div class="min-h-screen flex items-center justify-center bg-gradient-to-b from-[#071028] to-[#0f1724] p-6">
+    <div class="grid gap-10 md:grid-cols-2 w-full max-w-4xl">
+      <!-- Analog clock card -->
+      <div class="bg-white/5 rounded-2xl p-8 shadow-xl border border-white/10 flex flex-col items-center gap-4 backdrop-blur-md">
+        <div class="uppercase tracking-widest text-xs text-cyan-300 font-semibold mb-2">Analog Clock</div>
+        <div class="clock-wrap">
+          <div class="clock" id="clock">
+            <div class="ticks" id="ticks"></div>
+            <div class="num" style="transform:translate(-50%,0) rotate(0deg)">12</div>
+            <div class="num" style="transform:translate(-50%,0) rotate(90deg)">3</div>
+            <div class="num" style="transform:translate(-50%,0) rotate(180deg)">6</div>
+            <div class="num" style="transform:translate(-50%,0) rotate(270deg)">9</div>
+            <div class="hand hour" id="hour"></div>
+            <div class="hand minute" id="minute"></div>
+            <div class="hand second" id="second"></div>
+            <div class="center-dot"></div>
+          </div>
+        </div>
+        <div class="flex gap-3 justify-center flex-wrap mt-4">
+          <button class="btn px-4 py-2 rounded-lg border border-cyan-400 text-cyan-100 hover:bg-cyan-400/20 transition" id="toggle-seconds">Hide seconds</button>
+        </div>
+        <div class="tz text-xs text-cyan-300 mt-2" id="tzinfo"></div>
+      </div>
+
+      <!-- Digital clock card -->
+      <div class="bg-white/5 rounded-2xl p-8 shadow-xl border border-white/10 flex flex-col items-center gap-4 backdrop-blur-md">
+        <div class="uppercase tracking-widest text-xs text-cyan-300 font-semibold mb-2">Digital Clock</div>
+        <div class="time mb-2"><span id="digclock">00:00:00</span><span id="digampm" class="ampm" style="display:none">AM</span></div>
+        <div class="date mb-2" id="digdate">—</div>
+        <div class="flex gap-3 justify-center flex-wrap mt-2">
+          <button id="toggle-format" class="btn px-4 py-2 rounded-lg border border-cyan-400 text-cyan-100 hover:bg-cyan-400/20 transition" type="button">Switch to 12‑hour</button>
+          <button id="copy-time" class="btn px-4 py-2 rounded-lg border border-cyan-400 text-cyan-100 hover:bg-cyan-400/20 transition" type="button">Copy time</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function($){
+      // Analog ticks
+      for(let i=0;i<60;i++){
+        const $t = $('<div/>').addClass('tick');
+        const angle = i*6; const scale = (i%5===0)?1.0:0.6;
+        $t.css({transform:`translate(-50%,0) rotate(${angle}deg) scaleY(${scale})`, top:'6px'});
+        $('#ticks').append($t);
+      }
+
+      function setTZ(){
+        const now = new Date();
+        const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || 'Local';
+        const offsetMin = -now.getTimezoneOffset();
+        const sign = offsetMin>=0?'+':'-';
+        const abs = Math.abs(offsetMin);
+        const hh = String(Math.floor(abs/60)).padStart(2,'0');
+        const mm = String(abs%60).padStart(2,'0');
+        $('#tzinfo').text(`${tz} (UTC${sign}${hh}:${mm})`);
+      }
+      setTZ();
+
+      function updateAnalog(){
+        const now = new Date();
+        const sec = now.getSeconds();
+        const min = now.getMinutes();
+        const hr = now.getHours()%12 + min/60;
+        $('#hour').css('transform', `translate(-50%,0) rotate(${hr*30}deg)`);
+        $('#minute').css('transform', `translate(-50%,0) rotate(${(min+sec/60)*6}deg)`);
+        $('#second').css('transform', `translate(-50%,0) rotate(${sec*6}deg)`);
+      }
+      // Digital clock
+      let is24h = true;
+      function pad(n){return n.toString().padStart(2,'0');}
+      function updateDigital(){
+        const now = new Date();
+        let h=now.getHours(),m=now.getMinutes(),s=now.getSeconds();
+        let ampm="";
+        if(!is24h){
+          ampm = h>=12?"PM":"AM";
+          h = h%12; if(h===0) h=12;
+          $('#digampm').text(ampm).show();
+        } else {$('#digampm').hide();}
+        $('#digclock').text(pad(h)+":"+pad(m)+":"+pad(s));
+        const dateFmt=new Intl.DateTimeFormat(undefined,{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+        $('#digdate').text(dateFmt.format(now));
+      }
+
+      $(function(){
+        updateAnalog();updateDigital();
+        const now=new Date();
+        setTimeout(function(){
+          updateAnalog();updateDigital();
+          setInterval(()=>{updateAnalog();updateDigital();},1000);
+        },1000-now.getMilliseconds());
+
+        $('#toggle-seconds').on('click',function(){
+          $('#second').toggle();
+          $(this).text($('#second').is(':visible')?"Hide seconds":"Show seconds");
+        });
+        $('#toggle-format').on('click',function(){
+          is24h=!is24h;
+          $(this).text(is24h?"Switch to 12‑hour":"Switch to 24‑hour");
+          updateDigital();
+        });
+        $('#copy-time').on('click',function(){
+          const str=$('#digclock').text()+($('#digampm').is(':visible')?" "+$('#digampm').text():"");
+          navigator.clipboard?.writeText(str).then(()=>{const $b=$(this);const old=$b.text();$b.text('Copied!');setTimeout(()=>$b.text(old),900);}).catch(()=>alert('Copy failed'));
+        });
+      });
+    })(jQuery);
+  </script>
+</body>
+</html>
